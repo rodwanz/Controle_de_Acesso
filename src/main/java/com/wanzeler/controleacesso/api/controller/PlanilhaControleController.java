@@ -1,4 +1,4 @@
-package com.wanzeler.controleacesso.controllers;
+package com.wanzeler.controleacesso.api.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.wanzeler.controleacesso.dto.PlanilhaControleDTO;
-import com.wanzeler.controleacesso.entities.PlanilhaControle;
-import com.wanzeler.controleacesso.services.PlanilhaControleCadastroService;
+import com.wanzeler.controleacesso.domain.dto.PlanilhaControleDTO;
+import com.wanzeler.controleacesso.domain.model.PlanilhaControle;
+import com.wanzeler.controleacesso.domain.services.PlanilhaControleCadastroService;
 
 @RestController
 @RequestMapping(value = "/dados")

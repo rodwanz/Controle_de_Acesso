@@ -1,4 +1,4 @@
-package com.wanzeler.controleacesso.services;
+package com.wanzeler.controleacesso.domain.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wanzeler.controleacesso.dto.PlanilhaControleDTO;
-import com.wanzeler.controleacesso.entities.PlanilhaControle;
-import com.wanzeler.controleacesso.repositories.PlanilhaControleRepository;
+import com.wanzeler.controleacesso.domain.dto.PlanilhaControleDTO;
+import com.wanzeler.controleacesso.domain.model.PlanilhaControle;
+import com.wanzeler.controleacesso.domain.repositories.PlanilhaControleRepository;
 import com.wanzeler.controleacesso.services.exception.PlanilhaControleNotFoundException;
 @Service
 public class PlanilhaControleCadastroService {
@@ -38,10 +38,8 @@ public class PlanilhaControleCadastroService {
 		controle.setMotivo(controleDTO.getMotivo());
 		controle.setEmpresa(controleDTO.getEmpresa());
 		controle.setDocumento(controleDTO.getDocumento());
-		controle.setDestino(controleDTO.getDestino());
-		controle.setData(controleDTO.getData());
-		controle.setHoraDeEntrada(controleDTO.getHoraDeEntrada());
-		controle.setHoraDeSaida(controleDTO.getHoraDeSaida());
+		controle.setBlocoApartamento(controleDTO.getBlocoApartamento());
+	
 		return controleRepository.save(controle);
 	}
 }
