@@ -37,14 +37,13 @@ public class PlanilhaControle {
 	private String empresa;
 
 	@NotBlank
-	@Size(max = 11)
+	@Size(max = 60)
 	private String documento;
 
 	@NotBlank
 	@Size(max = 5)
-	private String blocoApartamento;
+	private String destino;
 	
-	private OffsetDateTime horaDeEntrada;
-	private OffsetDateTime horaDeSaida;
+	private OffsetDateTime dataAcesso;
 	
 }

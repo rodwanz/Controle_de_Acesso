@@ -3,10 +3,9 @@ create table planilha_controle(
           nome varchar(60) not null,
           motivo varchar(60) not null,
           empresa varchar(60) not null,
-          documento varchar(11) not null,
-          bloco_apartamento varchar(5) not null,
-          hora_entrada datetime not null,
-          hora_saida datetime,
+          documento varchar(60) not null,
+          destino varchar(5) not null,
+          data_acesso datetime not null,
 
          primary key (id)
 );

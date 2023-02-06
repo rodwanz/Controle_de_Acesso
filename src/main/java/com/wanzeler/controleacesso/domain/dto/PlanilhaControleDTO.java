@@ -20,9 +20,8 @@ public class PlanilhaControleDTO {
 	private String motivo;
 	private String empresa;
 	private String documento;
-	private String blocoApartamento;
-	private OffsetDateTime horaDeEntrada;
-	private OffsetDateTime horaDeSaida;
+	private String destino;
+	private OffsetDateTime dataAcesso;
 	
 	public PlanilhaControleDTO(PlanilhaControle controle) {
 		id = controle.getId();
@@ -30,6 +29,7 @@ public class PlanilhaControleDTO {
 		motivo = controle.getMotivo();
 		empresa = controle.getEmpresa();
 		documento = controle.getDocumento();
-		blocoApartamento = controle.getBlocoApartamento();
+		destino = controle.getDestino();
+		dataAcesso = controle.getDataAcesso();
 	}
 }

@@ -1,4 +1,4 @@
-package com.wanzeler.controleacesso.controllers.exception;
+package com.wanzeler.controleacesso.api.handlerexception;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.wanzeler.controleacesso.services.exception.PlanilhaControleNotFoundException;
+import com.wanzeler.controleacesso.domain.exception.PlanilhaControleNotFoundException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {

@@ -9,48 +9,58 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class AutorizacaoUsoDeVaga {
 	
+	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
-	@Column(name = "autoriza_apto_cedente")
+	@NotNull
+	@Size(max = 60)
+	@Column(name = "apto_cedente")
 	private String aptoCedente;
 	
-	@NotBlank
-	@Column(name = "autoriza_placa_morador")
+	@NotNull
+	@Size(max = 60)
+	@Column(name = "placa_morador")
 	private String placaMorador;
 	
-	@NotBlank
-	@Column(name = "autoriza_apto_beneficiado")
+	@NotNull
+	@Size(max = 60)
+	@Column(name = "apto_beneficiado")
 	private String aptoBenficiado;
 	
-	@NotBlank
-	@Column(name = "autoriza_placa_visitante")
+	@NotNull
+	@Size(max = 60)
+	@Column(name = "placa_visitante")
 	private String placaVisitante;
 	
 	@NotNull
-	@Column(name = "autoriza_marca")
+	@Size(max = 60)
+	@Column(name = "marca")
 	private String marca;
 	
 	@NotNull
-	@Column(name = "autoriza_modelo")
+	@Size(max = 60)
+	@Column(name = "modelo")
 	private String modelo;
 
-	@NotBlank
-	@Column(name = "autoriza_nome_motorista")
+	@NotNull
+	@Size(max = 60)
+	@Column(name = "nome_motorista")
 	private String nomeMotorista;
 	
-	private OffsetDateTime horaDeEntrada;
-	private OffsetDateTime horaDeSaida;
+	private OffsetDateTime acessoCondominio;
 
 }
