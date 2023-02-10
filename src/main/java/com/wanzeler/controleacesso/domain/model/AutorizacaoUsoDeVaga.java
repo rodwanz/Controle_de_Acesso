@@ -2,7 +2,6 @@ package com.wanzeler.controleacesso.domain.model;
 
 import java.time.OffsetDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,39 +25,32 @@ public class AutorizacaoUsoDeVaga {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@NotBlank
 	@Size(max = 60)
-	@Column(name = "apto_cedente")
 	private String aptoCedente;
 	
-	@NotNull
+	@NotBlank
 	@Size(max = 60)
-	@Column(name = "placa_morador")
 	private String placaMorador;
 	
-	@NotNull
-	@Size(max = 60)
-	@Column(name = "apto_beneficiado")
+	@NotNull(message = "O valor não pode ser nulo ou vazio")
+	@Size(max = 5)
 	private String aptoBenficiado;
 	
-	@NotNull
+	@NotBlank
 	@Size(max = 60)
-	@Column(name = "placa_visitante")
 	private String placaVisitante;
 	
-	@NotNull
+	@NotBlank
 	@Size(max = 60)
-	@Column(name = "marca")
 	private String marca;
 	
-	@NotNull
+	@NotBlank
 	@Size(max = 60)
-	@Column(name = "modelo")
 	private String modelo;
 
-	@NotNull
+	@NotBlank
 	@Size(max = 60)
-	@Column(name = "nome_motorista")
 	private String nomeMotorista;
 	
 	private OffsetDateTime acessoCondominio;

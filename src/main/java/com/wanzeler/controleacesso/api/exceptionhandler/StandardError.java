@@ -1,4 +1,4 @@
-package com.wanzeler.controleacesso.api.handlerexception;
+package com.wanzeler.controleacesso.api.exceptionhandler;
 
 import java.io.Serializable;
 
