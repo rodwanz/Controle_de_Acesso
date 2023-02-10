@@ -2,6 +2,7 @@ package com.wanzeler.controleacesso.domain.model;
 
 import java.time.OffsetDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,8 +35,9 @@ public class AutorizacaoUsoDeVaga {
 	private String placaMorador;
 	
 	@NotNull(message = "O valor não pode ser nulo ou vazio")
-	@Size(max = 5)
-	private String aptoBenficiado;
+	@Size(max = 6)
+	@Column(name = "apto_beneficiado")
+	private String aptoBeneficiado;
 	
 	@NotBlank
 	@Size(max = 60)

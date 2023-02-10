@@ -18,7 +18,7 @@ public class AutorizacaoUsoDeVagaDTO {
 	private Long id;
 	private String aptoCedente;
 	private String placaMorador;
-	private String aptoBenficiado;
+	private String aptoBeneficiado;
 	private String placaVisitante;
 	private String marca;
 	private String modelo;
@@ -29,7 +29,7 @@ public class AutorizacaoUsoDeVagaDTO {
 		id = vaga.getId();
 		aptoCedente = vaga.getAptoCedente();
 		placaMorador = vaga.getPlacaMorador();
-		aptoBenficiado = vaga.getAptoBenficiado();
+		aptoBeneficiado = vaga.getAptoBeneficiado();
 		placaVisitante = vaga.getPlacaVisitante();
 		marca = vaga.getMarca();
 		modelo = vaga.getModelo();
