@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.wanzeler.controleacesso.domain.exception.PlanilhaControleNotFoundException;
+import com.wanzeler.controleacesso.domain.exception.PlanilhaControleException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
@@ -28,8 +28,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	@Autowired
 	private MessageSource messageSource;
 	
-	@ExceptionHandler(PlanilhaControleNotFoundException.class)
-	public ResponseEntity<StandardError> planilhaControleNotFoundException(PlanilhaControleNotFoundException e,
+	@ExceptionHandler(PlanilhaControleException.class)
+	public ResponseEntity<StandardError> planilhaControleNotFoundException(PlanilhaControleException e,
 			HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError

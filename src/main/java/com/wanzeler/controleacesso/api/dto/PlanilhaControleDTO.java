@@ -1,4 +1,4 @@
-package com.wanzeler.controleacesso.domain.dto;
+package com.wanzeler.controleacesso.api.dto;
 
 import java.time.OffsetDateTime;
 

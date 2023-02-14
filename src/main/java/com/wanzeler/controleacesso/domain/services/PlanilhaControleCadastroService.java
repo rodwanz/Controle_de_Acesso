@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wanzeler.controleacesso.domain.dto.PlanilhaControleDTO;
-import com.wanzeler.controleacesso.domain.exception.PlanilhaControleNotFoundException;
+import com.wanzeler.controleacesso.api.dto.PlanilhaControleDTO;
+import com.wanzeler.controleacesso.domain.exception.PlanilhaControleException;
 import com.wanzeler.controleacesso.domain.model.PlanilhaControle;
 import com.wanzeler.controleacesso.domain.repositories.PlanilhaControleRepository;
 @Service
@@ -18,7 +18,7 @@ public class PlanilhaControleCadastroService {
 	
 	public PlanilhaControle findById(Long id){
 		Optional<PlanilhaControle> controle = controleRepository.findById(id);
-		return controle.orElseThrow(() -> new PlanilhaControleNotFoundException(
+		return controle.orElseThrow(() -> new PlanilhaControleException(
 				"Planilhamento não encontrado por Id: " + id + ", Dados: " 
 		+ PlanilhaControle.class.getName()));
 	}

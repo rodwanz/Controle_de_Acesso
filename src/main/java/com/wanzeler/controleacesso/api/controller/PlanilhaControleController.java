@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.wanzeler.controleacesso.domain.dto.PlanilhaControleDTO;
+import com.wanzeler.controleacesso.api.dto.PlanilhaControleDTO;
 import com.wanzeler.controleacesso.domain.model.PlanilhaControle;
 import com.wanzeler.controleacesso.domain.services.PlanilhaControleCadastroService;
 
