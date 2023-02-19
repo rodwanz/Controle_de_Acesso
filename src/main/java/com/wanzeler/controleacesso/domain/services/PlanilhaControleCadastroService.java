@@ -3,6 +3,8 @@ package com.wanzeler.controleacesso.domain.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ public class PlanilhaControleCadastroService {
 	@Autowired
 	private PlanilhaControleRepository controleRepository;
 	
+	@Transactional
 	public PlanilhaControle findById(Long id){
 		Optional<PlanilhaControle> controle = controleRepository.findById(id);
 		return controle.orElseThrow(() -> new PlanilhaControleException(
@@ -23,15 +26,18 @@ public class PlanilhaControleCadastroService {
 		+ PlanilhaControle.class.getName()));
 	}
 	
+	@Transactional
 	public List<PlanilhaControle> findAll() {
 		return controleRepository.findAll();
 	}
 	
+	@Transactional
 	public PlanilhaControle insert(PlanilhaControle controle) {
 		controle.setId(null);
 		return controleRepository.save(controle);
 	}
 
+	@Transactional
 	public PlanilhaControle upDate(Long id, PlanilhaControleDTO controleDTO) {
 		PlanilhaControle controle = findById(id);
 		controle.setNome(controleDTO.getNome());

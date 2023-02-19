@@ -1,5 +1,7 @@
 package com.wanzeler.controleacesso.domain.services;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ public class AutorizacaoPrestacaoDeServicoService {
 	@Autowired
 	private AutorizacaoPrestacaoDeServicoRepository atoAutorizacaoPrestacaoDeServicoRepository ;
 	
+	@Transactional
 	public AutorizacaoPrestacaoDeServico insert(AutorizacaoPrestacaoDeServico autoriza) {
 		autoriza.setId(null);
 		return atoAutorizacaoPrestacaoDeServicoRepository.save(autoriza);
