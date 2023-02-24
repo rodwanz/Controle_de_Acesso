@@ -1,8 +1,6 @@
 package com.wanzeler.controleacesso.api.controller;
 
-import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -17,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.wanzeler.controleacesso.api.dto.PlanilhaControleDTO;
 import com.wanzeler.controleacesso.domain.model.PlanilhaControle;
+import com.wanzeler.controleacesso.domain.repositories.PlanilhaControleRepository;
 import com.wanzeler.controleacesso.domain.services.PlanilhaControleCadastroService;
 
 @RestController
@@ -30,34 +27,33 @@ public class PlanilhaControleController {
 	@Autowired
 	private PlanilhaControleCadastroService controleService;
 	
+	@Autowired
+	private PlanilhaControleRepository planilhaControleRepository;
+	
 	@GetMapping
-	public ResponseEntity<List<PlanilhaControleDTO>> findAll(){
-		List<PlanilhaControle> list = controleService.findAll();
-		List<PlanilhaControleDTO> listDTO = 
-				list.stream().map(controle -> 
-				new PlanilhaControleDTO(controle)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
-		
+	public List<PlanilhaControle> buscandodoTodos(){
+		return planilhaControleRepository.findAll();		
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<PlanilhaControleDTO> findById(@PathVariable Long id) {
-		PlanilhaControle controle = controleService.findById(id);
-		return ResponseEntity.ok().body(new PlanilhaControleDTO(controle));
+	public ResponseEntity<PlanilhaControle> buscandoPorIdEntrega(@PathVariable Long id) {
+		return planilhaControleRepository.findById(id)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<PlanilhaControle> insert(@Valid @RequestBody PlanilhaControle controle){
-		controle = controleService.insert(controle);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(controle.getId()).toUri();
-		return ResponseEntity.created(uri).body(controle); 
+	public PlanilhaControle adicinandoEntrega(@Valid @RequestBody 
+			PlanilhaControle controle){
+		return controleService.insert(controle); 
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<PlanilhaControleDTO> upDate(@PathVariable Long id, @RequestBody PlanilhaControleDTO controleDTO){
-		PlanilhaControle newControle = controleService.upDate(id, controleDTO);
-		return ResponseEntity.ok().body(new PlanilhaControleDTO(newControle));
+	public ResponseEntity<PlanilhaControle> upDate(@PathVariable Long id, 
+			@RequestBody PlanilhaControle controle){
+		PlanilhaControle newControle = controleService.upDate(id, controle);
+		return ResponseEntity.ok().body(newControle);
 	}
 }
+

@@ -23,42 +23,41 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.wanzeler.controleacesso.domain.exception.PlanilhaControleException;
 
 @ControllerAdvice
-public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
+public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@Autowired
 	private MessageSource messageSource;
-	
+
 	@ExceptionHandler(PlanilhaControleException.class)
 	public ResponseEntity<StandardError> planilhaControleNotFoundException(PlanilhaControleException e,
 			HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError err = new StandardError
-				(System.currentTimeMillis(), status.value(), 
-						"Id não encontrado", "Corrigir erro", e.getMessage(), request.getRequestURI());
+		StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Id não encontrado",
+				"Corrigir erro", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
-	
+
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request){
-		List<Problema.Campo> campos = new ArrayList<>();
-		
-		for(ObjectError error : ex.getBindingResult().getAllErrors()) {
-			String nome = ((FieldError) error).getField();
-			String mensagem = messageSource.getMessage(error, 
-					LocaleContextHolder.getLocale());
 			
-			campos.add(new Problema.Campo(nome, mensagem));
-		}
-		
-		Problema problema = new Problema();
-		problema.setStatus(status.value());
-		problema.setDataHora(LocalDateTime.now());
-		problema.setTitulo("Um ou mais campos estão inválidos. "
-				+ "Faça o preenchimento correto e tente novamente");
-		problema.setCampos(campos);
-		
+			List<Problema.Campo> campos = new ArrayList<>();
+			
+			for(ObjectError error : ex.getBindingResult().getAllErrors()) {
+				String nome = ((FieldError) error).getField();
+				String mensagem = messageSource.getMessage(error, 
+						LocaleContextHolder.getLocale());
+				
+				campos.add(new Problema.Campo(nome, mensagem));
+			}
+			
+			Problema problema = new Problema();
+			problema.setStatus(status.value());
+			problema.setDataHora(LocalDateTime.now());
+			problema.setTitulo("Um ou mais campos estão inválidos. "
+					+ "Faça o preenchimento correto e tente novamente");
+			problema.setCampos(campos);
 		return handleExceptionInternal(ex, problema, headers, status, request);
-	}			
+	}
 }
