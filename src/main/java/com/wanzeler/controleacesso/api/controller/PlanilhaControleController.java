@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,24 +35,24 @@ public class PlanilhaControleController {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<PlanilhaControle> buscandoPorIdEntrega(@PathVariable Long id) {
-		return planilhaControleRepository.findById(id)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+	public PlanilhaControle buscandoPorIdEntrega(@PathVariable Long id) {
+		PlanilhaControle controle = controleService.buscandoPorId(id);
+		
+		return controleService.salvandoTodos(controle);
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public PlanilhaControle adicinandoEntrega(@Valid @RequestBody 
 			PlanilhaControle controle){
-		return controleService.insert(controle); 
+		return controleService.salvandoTodos(controle); 
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<PlanilhaControle> upDate(@PathVariable Long id, 
+	public PlanilhaControle atualizando(@PathVariable Long id, 
 			@RequestBody PlanilhaControle controle){
-		PlanilhaControle newControle = controleService.upDate(id, controle);
-		return ResponseEntity.ok().body(newControle);
+		PlanilhaControle newControle = controleService.buscandoPorId(id);
+		return controleService.salvandoTodos(newControle);
 	}
 }
 
