@@ -21,7 +21,7 @@ public class PlanilhaControleCadastroService {
 	@Transactional
 	public PlanilhaControle buscandoPorId(Long id) {
 		return controleRepository.findById(id).orElseThrow(() -> new PlanilhaControleException(
-				"Planilhamento não encontrado por Id: " + id + ", Dados: " 
+				"Id não encontrado na planilha: " + id + ", Buscar novamnete: " 
 		+ PlanilhaControle.class.getName()));
 	}
 	
