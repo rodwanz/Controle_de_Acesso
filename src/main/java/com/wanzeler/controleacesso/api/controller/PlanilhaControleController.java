@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wanzeler.controleacesso.api.dto.PlanilhaControleDTO;
+import com.wanzeler.controleacesso.api.dto.input.PlanilhaControleInput;
 import com.wanzeler.controleacesso.domain.model.PlanilhaControle;
 import com.wanzeler.controleacesso.domain.repositories.PlanilhaControleRepository;
 import com.wanzeler.controleacesso.domain.services.PlanilhaControleCadastroService;
@@ -46,15 +47,17 @@ public class PlanilhaControleController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public PlanilhaControleDTO inserindoTabela(@Valid @RequestBody 
-			PlanilhaControle controle){
+			PlanilhaControleInput controleInput){
+		PlanilhaControle controle = toDomainObject(controleInput);
 		return toModel(controleService.salvandoTodos(controle));
 	}
 	
 	@PutMapping(value = "/{id}")
 	public PlanilhaControleDTO atualizando(@PathVariable Long id, 
-			@RequestBody PlanilhaControle controle){
+			@RequestBody PlanilhaControleInput controleInput){
+		PlanilhaControle controle = toDomainObject(controleInput);
 		PlanilhaControle newControle = controleService.buscandoPorId(id);
-		return toModel(newControle);
+		return toModel(controleService.salvandoTodos(newControle));
 	}
 	
 	private PlanilhaControleDTO toModel(PlanilhaControle controle) {
@@ -73,6 +76,17 @@ public class PlanilhaControleController {
 		return planilhaControles.stream()
 				.map(controle -> toModel(controle))
 				.collect(Collectors.toList());
+	}
+	
+	private PlanilhaControle toDomainObject(PlanilhaControleInput controleInput) {
+		PlanilhaControle controle = new PlanilhaControle();
+		controle.setNome(controleInput.getNome());
+		controle.setMotivo(controleInput.getMotivo());
+		controle.setEmpresa(controleInput.getEmpresa()); 
+		controle.setDocumento(controleInput.getDocumento());
+		controle.setDestino(controleInput.getDestino());
+		controle.setDataAcesso(controleInput.getDataAcesso());
+		return controle;
 	}
 }
 

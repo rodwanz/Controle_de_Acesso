@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wanzeler.controleacesso.api.dto.AutorizacaoUsoDeVagaDTO;
+import com.wanzeler.controleacesso.api.dto.input.AutorizacaoUsoDeVagaInput;
 import com.wanzeler.controleacesso.domain.model.AutorizacaoUsoDeVaga;
 import com.wanzeler.controleacesso.domain.repositories.AutorizacaoUsoDeVagaRepository;
 import com.wanzeler.controleacesso.domain.services.AutorizacaoUsoDeVagaService;
@@ -33,7 +34,8 @@ public class AutorizacaoUsoVagaController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public AutorizacaoUsoDeVagaDTO vagaLivre(@Valid @RequestBody 
-			AutorizacaoUsoDeVaga vaga){
+			AutorizacaoUsoDeVagaInput vagaInput){
+		AutorizacaoUsoDeVaga vaga = toDomainObject(vagaInput);
 		return toModel(vagaService.inserindoVaga(vaga)); 
 	}
 	
@@ -68,5 +70,18 @@ public class AutorizacaoUsoVagaController {
 		return vagas.stream()
 				.map(vaga -> toModel(vaga))
 				.collect(Collectors.toList());
+	}
+	
+	private AutorizacaoUsoDeVaga toDomainObject(AutorizacaoUsoDeVagaInput vagaInput) {
+		AutorizacaoUsoDeVaga vaga = new AutorizacaoUsoDeVaga();
+		vaga.setAptoCedente(vagaInput.getAptoCedente());
+		vaga.setPlacaMorador(vagaInput.getPlacaMorador());
+		vaga.setAptoBeneficiado(vagaInput.getAptoBeneficiado()); 
+		vaga.setPlacaVisitante(vagaInput.getPlacaVisitante());
+		vaga.setMarca(vagaInput.getMarca());
+		vaga.setModelo(vagaInput.getModelo());
+		vaga.setNomeMotorista(vagaInput.getNomeMotorista());
+		vaga.setAcessoCondominio(vagaInput.getAcessoCondominio());
+		return vaga;
 	}
 }
