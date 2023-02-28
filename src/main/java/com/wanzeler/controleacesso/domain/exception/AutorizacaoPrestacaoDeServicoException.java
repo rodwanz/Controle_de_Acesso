@@ -6,4 +6,8 @@ public class AutorizacaoPrestacaoDeServicoException extends AutorizacaoUsoDeVaga
 	public AutorizacaoPrestacaoDeServicoException(String msg) {
 		super(msg);
 	}
+	
+	public AutorizacaoPrestacaoDeServicoException(Long id) {
+		this(String.format("Prestador de serviço não autorizado %d", id));
+	}
 }

@@ -6,4 +6,8 @@ public class AutorizacaoUsoDeVagaException extends PlanilhaControleException{
 	public AutorizacaoUsoDeVagaException(String msg) {
 		super(msg);
 	}
+	
+	public AutorizacaoUsoDeVagaException(Long id) {
+		this(String.format("Id errado, corrigir %d", id));
+	}
 }

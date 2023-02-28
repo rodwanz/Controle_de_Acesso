@@ -31,5 +31,5 @@ public class PlanilhaControleDTO {
 		documento = controle.getDocumento();
 		destino = controle.getDestino();
 		dataAcesso = controle.getDataAcesso();
-	}
+	}	
 }

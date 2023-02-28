@@ -1,8 +1,5 @@
 package com.wanzeler.controleacesso.domain.services;
 
-import java.util.List;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +17,14 @@ public class PlanilhaControleCadastroService {
 
 	@Transactional
 	public PlanilhaControle buscandoPorId(Long id) {
-		return controleRepository.findById(id).orElseThrow(() -> new PlanilhaControleException(
-				"Id não encontrado na planilha: " + id + ", Buscar novamnete: " 
-		+ PlanilhaControle.class.getName()));
+		return controleRepository.findById(id)
+				.orElseThrow(() -> new PlanilhaControleException(id));
+
 	}
 	
 	@Transactional
 	public PlanilhaControle salvandoTodos(PlanilhaControle controle) {
+		controle.setId(null);
 		return controleRepository.save(controle);
 	}
 }

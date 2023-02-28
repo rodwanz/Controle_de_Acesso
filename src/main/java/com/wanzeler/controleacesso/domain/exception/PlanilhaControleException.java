@@ -6,4 +6,8 @@ public class PlanilhaControleException extends RuntimeException{
 	public PlanilhaControleException(String msg) {
 		super(msg);
 	}
+	
+	public PlanilhaControleException(Long id) {
+		this(String.format("Cadastro não encontrado %d", id));
+	}
 }

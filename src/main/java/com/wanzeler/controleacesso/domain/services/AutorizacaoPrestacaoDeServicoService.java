@@ -1,8 +1,5 @@
 package com.wanzeler.controleacesso.domain.services;
 
-import java.util.List;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +16,15 @@ public class AutorizacaoPrestacaoDeServicoService {
 	private AutorizacaoPrestacaoDeServicoRepository atoAutorizacaoPrestacaoDeServicoRepository ;
 	
 	@Transactional
-	public AutorizacaoPrestacaoDeServico insert(AutorizacaoPrestacaoDeServico autoriza) {
+	public AutorizacaoPrestacaoDeServico inserindoAutorizacao(AutorizacaoPrestacaoDeServico autoriza) {
 		autoriza.setId(null);
 		return atoAutorizacaoPrestacaoDeServicoRepository.save(autoriza);
 	}
 	
 	@Transactional
-	public AutorizacaoPrestacaoDeServico findById(Long id){
-		Optional<AutorizacaoPrestacaoDeServico> autoriza = atoAutorizacaoPrestacaoDeServicoRepository.findById(id);
-		return autoriza
-				.orElseThrow(() -> new AutorizacaoPrestacaoDeServicoException(
-				"Autorização não encontrado: " + id + ", Buscar novamente: " 
-		+ AutorizacaoPrestacaoDeServico.class.getName()));
-	}
-	
-	@Transactional
-	public List<AutorizacaoPrestacaoDeServico> findAll() {
-		return atoAutorizacaoPrestacaoDeServicoRepository.findAll();
+	public AutorizacaoPrestacaoDeServico buscandoId(Long id){
+		return atoAutorizacaoPrestacaoDeServicoRepository.findById(id)
+				.orElseThrow(() -> new AutorizacaoPrestacaoDeServicoException(id));
+
 	}
 }

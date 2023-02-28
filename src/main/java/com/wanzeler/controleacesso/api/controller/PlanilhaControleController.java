@@ -45,9 +45,9 @@ public class PlanilhaControleController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public PlanilhaControleDTO adicinandoEntrega(@Valid @RequestBody 
+	public PlanilhaControleDTO inserindoTabela(@Valid @RequestBody 
 			PlanilhaControle controle){
-		return toModel(controle); 
+		return toModel(controleService.salvandoTodos(controle));
 	}
 	
 	@PutMapping(value = "/{id}")
@@ -57,15 +57,15 @@ public class PlanilhaControleController {
 		return toModel(newControle);
 	}
 	
-	private PlanilhaControleDTO toModel(PlanilhaControle planilhaControle) {
+	private PlanilhaControleDTO toModel(PlanilhaControle controle) {
 		PlanilhaControleDTO planilhaControleDTO = new PlanilhaControleDTO();
-		planilhaControleDTO.setId(planilhaControle.getId());
-		planilhaControleDTO.setNome(planilhaControle.getNome());
-		planilhaControleDTO.setMotivo(planilhaControle.getMotivo());
-		planilhaControleDTO.setEmpresa(planilhaControle.getEmpresa());
-		planilhaControleDTO.setDocumento(planilhaControle.getDocumento());
-		planilhaControleDTO.setDestino(planilhaControle.getDestino());
-		planilhaControleDTO.setDataAcesso(planilhaControle.getDataAcesso());
+		planilhaControleDTO.setId(controle.getId());
+		planilhaControleDTO.setNome(controle.getNome());
+		planilhaControleDTO.setMotivo(controle.getMotivo());
+		planilhaControleDTO.setEmpresa(controle.getEmpresa());
+		planilhaControleDTO.setDocumento(controle.getDocumento());
+		planilhaControleDTO.setDestino(controle.getDestino());
+		planilhaControleDTO.setDataAcesso(controle.getDataAcesso());
 		return planilhaControleDTO;
 	}
 	
