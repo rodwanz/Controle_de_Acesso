@@ -1,7 +1,6 @@
 package com.wanzeler.controleacesso.api.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wanzeler.controleacesso.api.assembler.PlanilhaControllerDtoAssembler;
 import com.wanzeler.controleacesso.api.dto.PlanilhaControleDTO;
 import com.wanzeler.controleacesso.api.dto.input.PlanilhaControleInput;
 import com.wanzeler.controleacesso.domain.model.PlanilhaControle;
@@ -32,16 +32,19 @@ public class PlanilhaControleController {
 	@Autowired
 	private PlanilhaControleRepository planilhaControleRepository;
 	
+	@Autowired
+	private PlanilhaControllerDtoAssembler planilhaDtoAssembler;
+	
 	@GetMapping
 	public List<PlanilhaControleDTO> buscandodoTodos(){
-		return toCollectionDTO(planilhaControleRepository.findAll());		
+		return planilhaDtoAssembler.toCollectionDTO(planilhaControleRepository.findAll());		
 	}
 	
 	@GetMapping(value = "/{id}")
 	public PlanilhaControleDTO buscandoPorIdEntrega(@PathVariable Long id) {
 		PlanilhaControle controle = controleService.buscandoPorId(id);
 		
-		return toModel(controle);
+		return planilhaDtoAssembler.toModel(controle);
 	}
 	
 	@PostMapping
@@ -49,7 +52,7 @@ public class PlanilhaControleController {
 	public PlanilhaControleDTO inserindoTabela(@Valid @RequestBody 
 			PlanilhaControleInput controleInput){
 		PlanilhaControle controle = toDomainObject(controleInput);
-		return toModel(controleService.salvandoTodos(controle));
+		return planilhaDtoAssembler.toModel(controleService.salvandoTodos(controle));
 	}
 	
 	@PutMapping(value = "/{id}")
@@ -57,25 +60,7 @@ public class PlanilhaControleController {
 			@RequestBody PlanilhaControleInput controleInput){
 		PlanilhaControle controle = toDomainObject(controleInput);
 		PlanilhaControle newControle = controleService.buscandoPorId(id);
-		return toModel(controleService.salvandoTodos(newControle));
-	}
-	
-	private PlanilhaControleDTO toModel(PlanilhaControle controle) {
-		PlanilhaControleDTO planilhaControleDTO = new PlanilhaControleDTO();
-		planilhaControleDTO.setId(controle.getId());
-		planilhaControleDTO.setNome(controle.getNome());
-		planilhaControleDTO.setMotivo(controle.getMotivo());
-		planilhaControleDTO.setEmpresa(controle.getEmpresa());
-		planilhaControleDTO.setDocumento(controle.getDocumento());
-		planilhaControleDTO.setDestino(controle.getDestino());
-		planilhaControleDTO.setDataAcesso(controle.getDataAcesso());
-		return planilhaControleDTO;
-	}
-	
-	private List<PlanilhaControleDTO> toCollectionDTO(List<PlanilhaControle> planilhaControles){
-		return planilhaControles.stream()
-				.map(controle -> toModel(controle))
-				.collect(Collectors.toList());
+		return planilhaDtoAssembler.toModel(controleService.salvandoTodos(newControle));
 	}
 	
 	private PlanilhaControle toDomainObject(PlanilhaControleInput controleInput) {

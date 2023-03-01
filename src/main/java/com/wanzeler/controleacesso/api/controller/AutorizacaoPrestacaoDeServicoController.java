@@ -1,7 +1,6 @@
 package com.wanzeler.controleacesso.api.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -15,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wanzeler.controleacesso.api.assembler.AutorizacaoPrestacaoDeServicoDtoAssembler;
 import com.wanzeler.controleacesso.api.dto.AutorizacaoPrestacaoDeServicoDTO;
 import com.wanzeler.controleacesso.api.dto.input.AutorizacaoPrestacaoDeServicoInput;
-import com.wanzeler.controleacesso.api.dto.input.AutorizacaoUsoDeVagaInput;
 import com.wanzeler.controleacesso.domain.model.AutorizacaoPrestacaoDeServico;
-import com.wanzeler.controleacesso.domain.model.AutorizacaoUsoDeVaga;
 import com.wanzeler.controleacesso.domain.repositories.AutorizacaoPrestacaoDeServicoRepository;
 import com.wanzeler.controleacesso.domain.services.AutorizacaoPrestacaoDeServicoService;
 
@@ -33,41 +31,28 @@ public class AutorizacaoPrestacaoDeServicoController {
 	@Autowired
 	private AutorizacaoPrestacaoDeServicoService autorizacaoPrestacaoDeServicoService;
 	
+	@Autowired
+	private AutorizacaoPrestacaoDeServicoDtoAssembler autorizacaoServicoDtoAssembler;
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public AutorizacaoPrestacaoDeServicoDTO autorizaServico(@Valid @RequestBody 
 			AutorizacaoPrestacaoDeServicoInput autorizaInput){
 		AutorizacaoPrestacaoDeServico autoriza = toDomainObject(autorizaInput);
-		return toModel(autorizacaoPrestacaoDeServicoService.inserindoAutorizacao(autoriza)); 
+		return autorizacaoServicoDtoAssembler.toModel(autorizacaoPrestacaoDeServicoService.inserindoAutorizacao(autoriza)); 
 	}
 	
 	@GetMapping
 	public List<AutorizacaoPrestacaoDeServicoDTO> todasAsAutorizacoes(){
-		return toCollectionDTO(autorizacaoPrestacaoDeServicoRepository.findAll());		
+		return autorizacaoServicoDtoAssembler.toCollectionDTO(autorizacaoPrestacaoDeServicoRepository.findAll());		
 	}
 	
 	@GetMapping(value = "/{id}")
 	public AutorizacaoPrestacaoDeServicoDTO autorizacaoPorId(@PathVariable Long id) {
 		AutorizacaoPrestacaoDeServico autoriza = autorizacaoPrestacaoDeServicoService.buscandoId(id);
 		
-		return toModel(autoriza);
+		return autorizacaoServicoDtoAssembler.toModel(autoriza);
 
-	}
-
-	private AutorizacaoPrestacaoDeServicoDTO toModel(AutorizacaoPrestacaoDeServico autoriza) {
-		AutorizacaoPrestacaoDeServicoDTO autorizaDTO = new AutorizacaoPrestacaoDeServicoDTO();
-		autorizaDTO.setId(autoriza.getId());
-		autorizaDTO.setApartamentoAtendido(autoriza.getApartamentoAtendido());
-		autorizaDTO.setResponsavelPeloServico(autoriza.getResponsavelPeloServico());
-		autorizaDTO.setDocumento(autoriza.getDocumento());
-		autorizaDTO.setHoraDeAcesso(autoriza.getHoraDeAcesso());
-		return autorizaDTO;
-	}
-	
-	private List<AutorizacaoPrestacaoDeServicoDTO> toCollectionDTO(List<AutorizacaoPrestacaoDeServico> autorizacoes){
-		return autorizacoes.stream()
-				.map(autoriza -> toModel(autoriza))
-				.collect(Collectors.toList());
 	}
 	
 	private AutorizacaoPrestacaoDeServico toDomainObject(AutorizacaoPrestacaoDeServicoInput autorizaInput) {

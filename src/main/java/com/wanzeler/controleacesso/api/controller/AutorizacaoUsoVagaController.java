@@ -1,7 +1,6 @@
 package com.wanzeler.controleacesso.api.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wanzeler.controleacesso.api.assembler.AutorizacaoUsoVagaDtoAssembler;
 import com.wanzeler.controleacesso.api.dto.AutorizacaoUsoDeVagaDTO;
 import com.wanzeler.controleacesso.api.dto.input.AutorizacaoUsoDeVagaInput;
 import com.wanzeler.controleacesso.domain.model.AutorizacaoUsoDeVaga;
@@ -31,45 +31,28 @@ public class AutorizacaoUsoVagaController {
 	@Autowired
 	private AutorizacaoUsoDeVagaService vagaService;
 	
+	@Autowired
+	private AutorizacaoUsoVagaDtoAssembler autorizacaoDtoAssembler;
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public AutorizacaoUsoDeVagaDTO vagaLivre(@Valid @RequestBody 
 			AutorizacaoUsoDeVagaInput vagaInput){
 		AutorizacaoUsoDeVaga vaga = toDomainObject(vagaInput);
-		return toModel(vagaService.inserindoVaga(vaga)); 
+		return autorizacaoDtoAssembler.toModel(vagaService.inserindoVaga(vaga)); 
 	}
 	
 	@GetMapping
 	public List<AutorizacaoUsoDeVagaDTO> buscandoTodosOsCadastros(){
-		return toCollectionDTO(vagaRepository.findAll());		
+		return autorizacaoDtoAssembler.toCollectionDTO(vagaRepository.findAll());		
 	}
 	
 	@GetMapping(value = "/{id}")
 	public AutorizacaoUsoDeVagaDTO buscandoVagaPorId(@PathVariable Long id) {
 		AutorizacaoUsoDeVaga vaga = vagaService.buscandoId(id);
 		
-		return toModel(vaga);
+		return autorizacaoDtoAssembler.toModel(vaga);
 		
-	}
-
-	private AutorizacaoUsoDeVagaDTO toModel(AutorizacaoUsoDeVaga vaga) {
-		AutorizacaoUsoDeVagaDTO vagaDTO = new AutorizacaoUsoDeVagaDTO();
-		vagaDTO.setId(vaga.getId());
-		vagaDTO.setAptoCedente(vaga.getAptoCedente());
-		vagaDTO.setPlacaMorador(vaga.getPlacaMorador());
-		vagaDTO.setAptoBeneficiado(vaga.getAptoBeneficiado());
-		vagaDTO.setPlacaVisitante(vaga.getPlacaVisitante());
-		vagaDTO.setMarca(vaga.getMarca());
-		vagaDTO.setModelo(vaga.getModelo());
-		vagaDTO.setNomeMotorista(vaga.getNomeMotorista());
-		vagaDTO.setAcessoCondominio(vaga.getAcessoCondominio());
-		return vagaDTO;
-	}
-	
-	private List<AutorizacaoUsoDeVagaDTO> toCollectionDTO(List<AutorizacaoUsoDeVaga> vagas){
-		return vagas.stream()
-				.map(vaga -> toModel(vaga))
-				.collect(Collectors.toList());
 	}
 	
 	private AutorizacaoUsoDeVaga toDomainObject(AutorizacaoUsoDeVagaInput vagaInput) {
