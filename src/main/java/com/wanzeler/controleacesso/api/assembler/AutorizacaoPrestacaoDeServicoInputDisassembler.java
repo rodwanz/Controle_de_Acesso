@@ -1,5 +1,7 @@
 package com.wanzeler.controleacesso.api.assembler;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.wanzeler.controleacesso.api.dto.input.AutorizacaoPrestacaoDeServicoInput;
@@ -8,12 +10,10 @@ import com.wanzeler.controleacesso.domain.model.AutorizacaoPrestacaoDeServico;
 @Component
 public class AutorizacaoPrestacaoDeServicoInputDisassembler {
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	public AutorizacaoPrestacaoDeServico toDomainObject(AutorizacaoPrestacaoDeServicoInput autorizaInput) {
-		AutorizacaoPrestacaoDeServico autoriza = new AutorizacaoPrestacaoDeServico();
-		autoriza.setApartamentoAtendido(autorizaInput.getApartamentoAtendido());
-		autoriza.setResponsavelPeloServico(autorizaInput.getResponsavelPeloServico());
-		autoriza.setDocumento(autorizaInput.getDocumento()); 
-		autoriza.setHoraDeAcesso(autorizaInput.getHoraDeAcesso());		
-		return autoriza;
+		return modelMapper.map(autorizaInput, AutorizacaoPrestacaoDeServico.class);
 	}
 }
