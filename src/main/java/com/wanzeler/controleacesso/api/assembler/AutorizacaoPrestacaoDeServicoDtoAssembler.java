@@ -26,5 +26,4 @@ public class AutorizacaoPrestacaoDeServicoDtoAssembler {
 				.map(autoriza -> toModel(autoriza))
 				.collect(Collectors.toList());
 	}
-
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wanzeler.controleacesso.api.assembler.PlanilhaControleInputDisassembler;
 import com.wanzeler.controleacesso.api.assembler.PlanilhaControllerDtoAssembler;
 import com.wanzeler.controleacesso.api.dto.PlanilhaControleDTO;
 import com.wanzeler.controleacesso.api.dto.input.PlanilhaControleInput;
@@ -35,6 +36,9 @@ public class PlanilhaControleController {
 	@Autowired
 	private PlanilhaControllerDtoAssembler planilhaDtoAssembler;
 	
+	@Autowired
+	private PlanilhaControleInputDisassembler planilhaInptDisassembler;
+	
 	@GetMapping
 	public List<PlanilhaControleDTO> buscandodoTodos(){
 		return planilhaDtoAssembler.toCollectionDTO(planilhaControleRepository.findAll());		
@@ -51,27 +55,16 @@ public class PlanilhaControleController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public PlanilhaControleDTO inserindoTabela(@Valid @RequestBody 
 			PlanilhaControleInput controleInput){
-		PlanilhaControle controle = toDomainObject(controleInput);
+		PlanilhaControle controle = planilhaInptDisassembler.toDomainObject(controleInput);
 		return planilhaDtoAssembler.toModel(controleService.salvandoTodos(controle));
 	}
 	
 	@PutMapping(value = "/{id}")
 	public PlanilhaControleDTO atualizando(@PathVariable Long id, 
 			@RequestBody PlanilhaControleInput controleInput){
-		PlanilhaControle controle = toDomainObject(controleInput);
+		PlanilhaControle controle = planilhaInptDisassembler.toDomainObject(controleInput);
 		PlanilhaControle newControle = controleService.buscandoPorId(id);
 		return planilhaDtoAssembler.toModel(controleService.salvandoTodos(newControle));
-	}
-	
-	private PlanilhaControle toDomainObject(PlanilhaControleInput controleInput) {
-		PlanilhaControle controle = new PlanilhaControle();
-		controle.setNome(controleInput.getNome());
-		controle.setMotivo(controleInput.getMotivo());
-		controle.setEmpresa(controleInput.getEmpresa()); 
-		controle.setDocumento(controleInput.getDocumento());
-		controle.setDestino(controleInput.getDestino());
-		controle.setDataAcesso(controleInput.getDataAcesso());
-		return controle;
-	}
+	}	
 }
 

@@ -2,6 +2,7 @@ package com.wanzeler.controleacesso.api.dto.input;
 
 import java.time.OffsetDateTime;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 //import javax.validation.constraints.NotNull;
 
@@ -11,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlanilhaControleInput {
-
 	
 	@NotBlank
 	private String nome;

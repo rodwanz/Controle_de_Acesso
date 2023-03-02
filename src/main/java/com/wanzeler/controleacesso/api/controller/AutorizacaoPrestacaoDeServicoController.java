@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wanzeler.controleacesso.api.assembler.AutorizacaoPrestacaoDeServicoDtoAssembler;
+import com.wanzeler.controleacesso.api.assembler.AutorizacaoPrestacaoDeServicoInputDisassembler;
 import com.wanzeler.controleacesso.api.dto.AutorizacaoPrestacaoDeServicoDTO;
 import com.wanzeler.controleacesso.api.dto.input.AutorizacaoPrestacaoDeServicoInput;
 import com.wanzeler.controleacesso.domain.model.AutorizacaoPrestacaoDeServico;
@@ -34,11 +35,14 @@ public class AutorizacaoPrestacaoDeServicoController {
 	@Autowired
 	private AutorizacaoPrestacaoDeServicoDtoAssembler autorizacaoServicoDtoAssembler;
 	
+	@Autowired
+	private AutorizacaoPrestacaoDeServicoInputDisassembler autorizaServicoInptDisassembler;
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public AutorizacaoPrestacaoDeServicoDTO autorizaServico(@Valid @RequestBody 
 			AutorizacaoPrestacaoDeServicoInput autorizaInput){
-		AutorizacaoPrestacaoDeServico autoriza = toDomainObject(autorizaInput);
+		AutorizacaoPrestacaoDeServico autoriza = autorizaServicoInptDisassembler.toDomainObject(autorizaInput);
 		return autorizacaoServicoDtoAssembler.toModel(autorizacaoPrestacaoDeServicoService.inserindoAutorizacao(autoriza)); 
 	}
 	
@@ -53,14 +57,5 @@ public class AutorizacaoPrestacaoDeServicoController {
 		
 		return autorizacaoServicoDtoAssembler.toModel(autoriza);
 
-	}
-	
-	private AutorizacaoPrestacaoDeServico toDomainObject(AutorizacaoPrestacaoDeServicoInput autorizaInput) {
-		AutorizacaoPrestacaoDeServico autoriza = new AutorizacaoPrestacaoDeServico();
-		autoriza.setApartamentoAtendido(autorizaInput.getApartamentoAtendido());
-		autoriza.setResponsavelPeloServico(autorizaInput.getResponsavelPeloServico());
-		autoriza.setDocumento(autorizaInput.getDocumento()); 
-		autoriza.setHoraDeAcesso(autorizaInput.getHoraDeAcesso());		
-		return autoriza;
 	}
 }
