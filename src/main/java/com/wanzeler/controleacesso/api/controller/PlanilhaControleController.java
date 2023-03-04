@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,7 @@ public class PlanilhaControleController {
 	private PlanilhaControllerDtoAssembler planilhaDtoAssembler;
 	
 	@Autowired
-	private PlanilhaControleInputDisassembler planilhaInptDisassembler;
+	private PlanilhaControleInputDisassembler planilhaInputDisassembler;
 	
 	@GetMapping
 	public List<PlanilhaControleDTO> buscandodoTodos(){
@@ -55,15 +56,15 @@ public class PlanilhaControleController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public PlanilhaControleDTO inserindoTabela(@Valid @RequestBody 
 			PlanilhaControleInput controleInput){
-		PlanilhaControle controle = planilhaInptDisassembler.toDomainObject(controleInput);
+		PlanilhaControle controle = planilhaInputDisassembler.toDomainObject(controleInput);
 		return planilhaDtoAssembler.toModel(controleService.salvandoTodos(controle));
 	}
 	
 	@PutMapping(value = "/{id}")
 	public PlanilhaControleDTO atualizando(@PathVariable Long id, 
 			@RequestBody PlanilhaControleInput controleInput){
-		PlanilhaControle controle = planilhaInptDisassembler.toDomainObject(controleInput);
 		PlanilhaControle newControle = controleService.buscandoPorId(id);
+		planilhaInputDisassembler.copyToDomainObject(controleInput, newControle);
 		return planilhaDtoAssembler.toModel(controleService.salvandoTodos(newControle));
 	}	
 }

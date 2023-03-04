@@ -2,9 +2,7 @@ package com.wanzeler.controleacesso.api.dto.input;
 
 import java.time.OffsetDateTime;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-//import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.wanzeler.controleacesso.api.dto.input.PlanilhaControleInput;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,5 +48,5 @@ public class PlanilhaControle {
 	
 	private OffsetDateTime dataAcesso;
 
-	
+	public void setId(PlanilhaControleInput planilhaControleInput) {}	
 }

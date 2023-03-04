@@ -16,4 +16,9 @@ public class PlanilhaControleInputDisassembler {
 	public PlanilhaControle toDomainObject(PlanilhaControleInput controleInput) {
 		return modelMapper.map(controleInput, PlanilhaControle.class);
 	}
+	
+	public void copyToDomainObject(PlanilhaControleInput planilhaInput, PlanilhaControle controle) {
+		controle.setId(new PlanilhaControleInput());
+		modelMapper.map(planilhaInput, controle);
+	}
 }
