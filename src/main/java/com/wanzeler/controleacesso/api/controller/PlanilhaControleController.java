@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +19,8 @@ import com.wanzeler.controleacesso.api.assembler.PlanilhaControleInputDisassembl
 import com.wanzeler.controleacesso.api.assembler.PlanilhaControllerDtoAssembler;
 import com.wanzeler.controleacesso.api.dto.PlanilhaControleDTO;
 import com.wanzeler.controleacesso.api.dto.input.PlanilhaControleInput;
+import com.wanzeler.controleacesso.domain.exception.ControleException;
+import com.wanzeler.controleacesso.domain.exception.PlanilhaControleException;
 import com.wanzeler.controleacesso.domain.model.PlanilhaControle;
 import com.wanzeler.controleacesso.domain.repositories.PlanilhaControleRepository;
 import com.wanzeler.controleacesso.domain.services.PlanilhaControleCadastroService;
@@ -61,11 +62,16 @@ public class PlanilhaControleController {
 	}
 	
 	@PutMapping(value = "/{id}")
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public PlanilhaControleDTO atualizando(@PathVariable Long id, 
 			@RequestBody PlanilhaControleInput controleInput){
-		PlanilhaControle newControle = controleService.buscandoPorId(id);
-		planilhaInputDisassembler.copyToDomainObject(controleInput, newControle);
-		return planilhaDtoAssembler.toModel(controleService.salvandoTodos(newControle));
+		try {
+			PlanilhaControle newControle = controleService.buscandoPorId(id);
+			planilhaInputDisassembler.copyToDomainObject(controleInput, newControle);
+			return planilhaDtoAssembler.toModel(controleService.salvandoTodos(newControle));
+		}catch(PlanilhaControleException e){
+			throw new ControleException(e.getMessage());
+		}
 	}	
 }
 
