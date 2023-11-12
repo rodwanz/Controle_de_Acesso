@@ -10,12 +10,10 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.wanzeler.controleacesso.api.dto.input.AutorizacaoPrestacaoDeServicoInput;
 
-@Getter
-@Setter
+import lombok.EqualsAndHashCode;
+
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class AutorizacaoPrestacaoDeServico {
@@ -41,5 +39,38 @@ public class AutorizacaoPrestacaoDeServico {
 	private String documento;
 	
 	private OffsetDateTime horaDeAcesso;
-	
+
+	public String getApartamentoAtendido() {
+		return apartamentoAtendido;
+	}
+
+	public void setApartamentoAtendido(String apartamentoAtendido) {
+		this.apartamentoAtendido = apartamentoAtendido;
+	}
+
+	public String getResponsavelPeloServico() {
+		return responsavelPeloServico;
+	}
+
+	public void setResponsavelPeloServico(String responsavelPeloServico) {
+		this.responsavelPeloServico = responsavelPeloServico;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public OffsetDateTime getHoraDeAcesso() {
+		return horaDeAcesso;
+	}
+
+	public void setHoraDeAcesso(OffsetDateTime horaDeAcesso) {
+		this.horaDeAcesso = horaDeAcesso;
+	}
+
+	public void setId(AutorizacaoPrestacaoDeServicoInput autorizacaoPrestacaoDeServicoInput) {}	
 }

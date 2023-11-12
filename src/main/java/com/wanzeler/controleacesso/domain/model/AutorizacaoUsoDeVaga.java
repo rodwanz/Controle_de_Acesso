@@ -11,12 +11,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import com.wanzeler.controleacesso.api.dto.input.AutorizacaoUsoDeVagaInput;
 
-@Getter
-@Setter
+import lombok.EqualsAndHashCode;
+
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class AutorizacaoUsoDeVaga {
@@ -56,5 +54,71 @@ public class AutorizacaoUsoDeVaga {
 	private String nomeMotorista;
 	
 	private OffsetDateTime acessoCondominio;
+
+	public String getAptoCedente() {
+		return aptoCedente;
+	}
+
+	public void setAptoCedente(String aptoCedente) {
+		this.aptoCedente = aptoCedente;
+	}
+
+	public String getPlacaMorador() {
+		return placaMorador;
+	}
+
+	public void setPlacaMorador(String placaMorador) {
+		this.placaMorador = placaMorador;
+	}
+
+	public String getAptoBeneficiado() {
+		return aptoBeneficiado;
+	}
+
+	public void setAptoBeneficiado(String aptoBeneficiado) {
+		this.aptoBeneficiado = aptoBeneficiado;
+	}
+
+	public String getPlacaVisitante() {
+		return placaVisitante;
+	}
+
+	public void setPlacaVisitante(String placaVisitante) {
+		this.placaVisitante = placaVisitante;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getNomeMotorista() {
+		return nomeMotorista;
+	}
+
+	public void setNomeMotorista(String nomeMotorista) {
+		this.nomeMotorista = nomeMotorista;
+	}
+
+	public OffsetDateTime getAcessoCondominio() {
+		return acessoCondominio;
+	}
+
+	public void setAcessoCondominio(OffsetDateTime acessoCondominio) {
+		this.acessoCondominio = acessoCondominio;
+	}
+
+	public void setId(AutorizacaoUsoDeVagaInput autorizacaoUsoDeVagaInput) {}
 
 }

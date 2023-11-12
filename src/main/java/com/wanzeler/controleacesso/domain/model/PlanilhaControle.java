@@ -12,11 +12,7 @@ import javax.validation.constraints.Size;
 import com.wanzeler.controleacesso.api.dto.input.PlanilhaControleInput;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class PlanilhaControle {
@@ -47,6 +43,54 @@ public class PlanilhaControle {
 	private String destino;
 	
 	private OffsetDateTime dataAcesso;
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
+	}
+
+	public String getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(String empresa) {
+		this.empresa = empresa;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
+
+	public String getDestino() {
+		return destino;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
+	}
+
+	public OffsetDateTime getDataAcesso() {
+		return dataAcesso;
+	}
+
+	public void setDataAcesso(OffsetDateTime dataAcesso) {
+		this.dataAcesso = dataAcesso;
+	}
 
 	public void setId(PlanilhaControleInput planilhaControleInput) {}	
 }

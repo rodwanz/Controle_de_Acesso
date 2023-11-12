@@ -15,14 +15,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AutorizacaoPrestacaoDeServicoDTO {
 
-	private Long id;
 	private String apartamentoAtendido;
 	private String responsavelPeloServico;
 	private String documento;
 	private OffsetDateTime horaDeAcesso;
 	
 	public AutorizacaoPrestacaoDeServicoDTO(AutorizacaoPrestacaoDeServico autoriza) {
-		id = autoriza.getId();
 		apartamentoAtendido = autoriza.getApartamentoAtendido();
 		responsavelPeloServico = autoriza.getResponsavelPeloServico();
 		documento = autoriza.getDocumento();

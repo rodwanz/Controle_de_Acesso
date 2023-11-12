@@ -15,7 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AutorizacaoUsoDeVagaDTO {
 	
-	private Long id;
 	private String aptoCedente;
 	private String placaMorador;
 	private String aptoBeneficiado;
@@ -26,7 +25,6 @@ public class AutorizacaoUsoDeVagaDTO {
 	private OffsetDateTime acessoCondominio;
 	
 	public AutorizacaoUsoDeVagaDTO(AutorizacaoUsoDeVaga vaga) {
-		id = vaga.getId();
 		aptoCedente = vaga.getAptoCedente();
 		placaMorador = vaga.getPlacaMorador();
 		aptoBeneficiado = vaga.getAptoBeneficiado();

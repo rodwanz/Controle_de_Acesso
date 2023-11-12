@@ -14,8 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlanilhaControleDTO {
-	
-	private Long id;
+
 	private String nome;
 	private String motivo;
 	private String empresa;
@@ -24,7 +23,6 @@ public class PlanilhaControleDTO {
 	private OffsetDateTime dataAcesso;
 	
 	public PlanilhaControleDTO(PlanilhaControle controle) {
-		id = controle.getId();
 		nome = controle.getNome();
 		motivo = controle.getMotivo();
 		empresa = controle.getEmpresa();
